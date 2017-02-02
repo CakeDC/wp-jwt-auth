@@ -25,16 +25,19 @@ class JWT_AUTH_UserProcessor {
     protected static function getAuthorizationHeader() {
         $authorization = false;
 
-        if (function_exists('getallheaders'))
-        {
+	$headers = array();
+        if (function_exists('getallheaders')) {
             $headers = getallheaders();
-
-            if (isset($headers['Authorization'])) {
-                $authorization = $headers['Authorization'];
-            }
         }
-        elseif (isset($_SERVER["Authorization"])){
+		
+	if (isset($headers['Authorization'])) {
+	    $authorization = $headers['Authorization'];
+	} elseif (isset($_SERVER["Authorization"])) {
             $authorization = $_SERVER["Authorization"];
+        } elseif (isset($_SERVER["AUTHORIZATION"])) {
+            $authorization = $_SERVER["AUTHORIZATION"];
+        } elseif (isset($_SERVER["HTTP_AUTHORIZATION"])) {
+            $authorization = $_SERVER["HTTP_AUTHORIZATION"];
         }
 
         return $authorization;
