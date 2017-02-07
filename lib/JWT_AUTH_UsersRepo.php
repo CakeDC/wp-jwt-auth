@@ -18,7 +18,7 @@ class JWT_AUTH_UsersRepo {
 
         $id = $jwt->$jwt_attribute;
 
-        $sql = 'SELECT u.*
+        $sql = 'SELECT *
                 FROM ' . $wpdb->users . '
                 WHERE '.$user_property.' = %s';
 
